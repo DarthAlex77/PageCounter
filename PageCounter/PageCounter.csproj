@@ -1,0 +1,50 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Worker">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+    <UserSecretsId>dotnet-PageCounter-9C4F38B8-324D-45FC-8FD7-5E512FDDCAB0</UserSecretsId>
+    <ApplicationManifest>Windows\app.manifest</ApplicationManifest>
+    <Version>1.0</Version>
+    <Authors>Aleksey Surgaev</Authors>
+    <Company>Open Source Dev</Company>
+    <Product>Page Counter</Product>
+    <Description>This cross platform worker service read EventLog (Windows) and Page_log (linux) for print jobs and send to DB</Description>
+    <PackageLicenseExpression></PackageLicenseExpression>
+    <Copyright>Copyright © 2020-2021 Aleksey Surgaev</Copyright>
+    <SignAssembly>false</SignAssembly>
+    <DelaySign>false</DelaySign>
+    <ApplicationIcon>icons8-c-sharp-logo-144.ico</ApplicationIcon>
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
+    <PackageProjectUrl>https://github.com/DarthAlex77/PageCounter</PackageProjectUrl>
+    <PackageIcon>icons8-c-sharp-logo-144.png</PackageIcon>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DebugType>embedded</DebugType>
+    <DebugSymbols>true</DebugSymbols>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="5.0.1" />
+    <PackageReference Include="Microsoft.Data.SqlClient" Version="2.1.0" />
+    <PackageReference Include="Microsoft.Extensions.Hosting.Systemd" Version="5.0.1" />
+    <PackageReference Include="Microsoft.Extensions.Hosting.WindowsServices" Version="5.0.1" />
+    <PackageReference Include="Microsoft.Extensions.Logging" Version="5.0.0" />
+    <PackageReference Include="Microsoft.Win32.Registry" Version="5.0.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+    <PackageReference Include="System.Drawing.Common" Version="5.0.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="UsbDevicesDotNet">
+      <HintPath>Windows\UsbDevicesDotNet.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="Windows\UsbDevicesDotNet.dll">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </None>
+    <None Include="..\LICENSE">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
+  </ItemGroup>
+</Project>
