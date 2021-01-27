@@ -47,7 +47,7 @@ namespace PageCounter
 
             hostBuilder.ConfigureAppConfiguration((context, builder) =>
             {
-                builder.SetBasePath(AppDomain.CurrentDomain.BaseDirectory).AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
+                builder.SetBasePath(AppDomain.CurrentDomain.BaseDirectory).AddJsonFile("appsettings.json", true, true);
                 builder.AddEnvironmentVariables();
             });
 

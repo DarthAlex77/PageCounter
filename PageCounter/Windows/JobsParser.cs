@@ -32,13 +32,18 @@ namespace PageCounter.Windows
                     {
                         if (jobId == Convert.ToUInt32(entry.Properties[0].Value))
                         {
-                            eventItems.Time = (DateTimeOffset) entry.TimeCreated;
-                            eventItems.TotalPage = Convert.ToUInt32(entry.Properties[7].Value) * copies;
+                            if (eventItems != null)
+                            {
+                                if (entry.TimeCreated != null) eventItems.Time = (DateTimeOffset) entry.TimeCreated;
+                                eventItems.TotalPage = Convert.ToUInt32(entry.Properties[7].Value) * copies;
+                            }
                         }
+
                         if (entry.Properties[4].Value.Equals(printer.SystemName))
                         {
                             items.Add(eventItems);
                         }
+
                         break;
                     }
                 }

@@ -1,10 +1,10 @@
 ﻿#pragma warning disable CA1416 // Validate platform compatibility
-using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.Drawing.Printing;
 using System.Linq;
 using System.Security.AccessControl;
+using Microsoft.Win32;
 using Vurdalakov.UsbDevicesDotNet;
 
 namespace PageCounter.Windows
@@ -13,12 +13,12 @@ namespace PageCounter.Windows
     {
         public static List<UsbPrinter> GetUsbPrintersData()
         {
-            List<UsbPrinter>usbPrinters=new List<UsbPrinter>();
+            List<UsbPrinter> usbPrinters = new List<UsbPrinter>();
             PrinterSettings.StringCollection installedPrinters = PrinterSettings.InstalledPrinters;
             const string keyTemplate = @"SYSTEM\CurrentControlSet\Control\Print\Printers\{0}\PNPData";
             foreach (string printer in installedPrinters)
-            {
-                using (RegistryKey hk = Registry.LocalMachine.OpenSubKey(string.Format(keyTemplate, printer), RegistryKeyPermissionCheck.Default, RegistryRights.QueryValues))
+                using (RegistryKey hk = Registry.LocalMachine.OpenSubKey(string.Format(keyTemplate, printer),
+                    RegistryKeyPermissionCheck.Default, RegistryRights.QueryValues))
                 {
                     if (hk != null)
                     {
@@ -26,14 +26,10 @@ namespace PageCounter.Windows
                         if (!guid.Equals(Guid.Empty))
                         {
                             string[] result = GetDeviceData(guid);
-                            if (result.Length != 0)
-                            {
-                                usbPrinters.Add(new UsbPrinter(result[0], result[1], printer));
-                            }
+                            if (result.Length != 0) usbPrinters.Add(new UsbPrinter(result[0], result[1], printer));
                         }
                     }
                 }
-            }
 
             return usbPrinters;
         }
@@ -63,6 +59,7 @@ namespace PageCounter.Windows
                     return result;
                 }
             }
+
             return new string[] { };
         }
     }

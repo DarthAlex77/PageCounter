@@ -23,46 +23,47 @@ namespace PageCounter
             SystemName = systemName;
         }
 
-        [Key]
-        public string HardwareSerial { get; set; }
+        [Key] public string HardwareSerial { get; set; }
+
         public string VisualSerial { get; set; }
         public string Product { get; set; }
         public string LastKnowIp { get; set; }
         public List<Job> Jobs { get; set; }
-        [NotMapped]
-        public string SystemName { get; set; }
+
+        [NotMapped] public string SystemName { get; set; }
     }
+
     public class Job
     {
         public Job()
         {
         }
 
-        public Job(DateTimeOffset dateTime, uint pagesCount,UsbPrinter printer)
+        public Job(DateTimeOffset dateTime, uint pagesCount, UsbPrinter printer)
         {
             DateTime = dateTime;
             PagesCount = pagesCount;
             Printer = printer;
         }
 
-        [Key]
-        public DateTimeOffset DateTime { get; set; }
+        [Key] public DateTimeOffset DateTime { get; set; }
+
         public uint PagesCount { get; set; }
         public UsbPrinter Printer { get; set; }
     }
-    public class ApplicationContext:DbContext
-    {
-        private ApplicationSettings config;
 
-        public DbSet<UsbPrinter>Printers { get; set; }
-        public DbSet<Job>Jobs { get; set; }
+    public sealed class ApplicationContext : DbContext
+    {
+        private readonly ApplicationSettings config;
 
         public ApplicationContext(ApplicationSettings config)
         {
-
             this.config = config;
             Database.EnsureCreated();
         }
+
+        public DbSet<UsbPrinter> Printers { get; set; }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.EnableSensitiveDataLogging();

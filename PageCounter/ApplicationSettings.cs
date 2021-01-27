@@ -6,10 +6,10 @@ namespace PageCounter
 {
     public class ApplicationSettings
     {
-        private string id;
-        private string password;
-        private string initialCatalog;
         private string dataSource;
+        private string id;
+        private string initialCatalog;
+        private string password;
 
         public string DataSource
         {
@@ -31,14 +31,14 @@ namespace PageCounter
 
         public string Password
         {
-            get => Get(ref password,nameof(Password));
-            set => Set(ref password,nameof(Password),value);
+            get => Get(ref password, nameof(Password));
+            set => Set(ref password, nameof(Password), value);
         }
-        
+
         public bool IntegratedSecurity { get; set; }
         public bool IsWindows { get; set; }
 
-        private static string Get(ref string field,string propertyName)
+        private static string Get(ref string field, string propertyName)
         {
             if (!string.IsNullOrWhiteSpace(field))
             {
@@ -47,12 +47,14 @@ namespace PageCounter
                     field = EncryptionHelper.Encrypt(field, "PASSWORD");
                     AddOrUpdateAppSetting($"DbSettings:{propertyName}", field);
                 }
+
                 field = EncryptionHelper.Decrypt(field, "PASSWORD");
             }
+
             return field;
         }
 
-        private static void Set(ref string field, string propertyName,string value)
+        private static void Set(ref string field, string propertyName, string value)
         {
             field = !EncryptionHelper.IsEncrypted(value) ? EncryptionHelper.Encrypt(value, "PASSWORD") : value;
             AddOrUpdateAppSetting($"DbSettings:{propertyName}", field);

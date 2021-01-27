@@ -6,9 +6,7 @@ using System.Linq;
 namespace PageCounter.Linux
 {
     public static class PrinterResolver
-    {
-        private static readonly char[] Numbers = {'1', '2', '3', '4', '5', '6', '7', '8', '9', '0'};
-        
+    { 
         public static List<UsbPrinter> GetUsbPrintersData()
         {
             List<UsbPrinter> usbPrinters = (List<UsbPrinter>) GetPrinterData();
@@ -25,6 +23,7 @@ namespace PageCounter.Linux
 
             return usbPrinters;
         }
+
         private static IEnumerable<UsbPrinter> GetPrinterData()
         {
             Process shell = LinuxHelpers.Bash(@"usb-devices|awk -vRS= '/Cls=07/{print $0,0.77342}'");
@@ -34,7 +33,6 @@ namespace PageCounter.Linux
             string line;
             UsbPrinter printer = null;
             while ((line = shell.StandardOutput.ReadLine()) != null)
-            {
                 if (line.Contains("Bus"))
                 {
                     printer = new UsbPrinter();
@@ -48,11 +46,11 @@ namespace PageCounter.Linux
                 {
                     if (printer != null) printer.Product = line.Split('=').Last();
                 }
-                else if (line.Contains("0.77342"))//0.77342 is magic number,end of item.
+                else if (line.Contains("0.77342")) //0.77342 is magic number,end of item.
                 {
                     usbPrinters.Add(printer);
                 }
-            }
+
             shell.WaitForExit();
             shell.Dispose();
 

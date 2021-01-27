@@ -21,13 +21,15 @@ namespace PageCounter.Linux
                         Job job = new Job
                         {
                             PagesCount = (uint) int.Parse(items[2]),
-                            DateTime = DateTimeOffset.ParseExact(items[3], "[dd/MMM/yyyy:HH:mm:ss K]",CultureInfo.InvariantCulture),
+                            DateTime = DateTimeOffset.ParseExact(items[3], "[dd/MMM/yyyy:HH:mm:ss K]",
+                                CultureInfo.InvariantCulture),
                             Printer = printer
                         };
                         jobs.Add(job);
                     }
                 }
             }
+
             return jobs;
         }
     }
